@@ -27,7 +27,10 @@ export default function Login({navigation}){
                     AsyncStorage.setItem("@token", res.data.token)
                     .then(()=>{
                         AsyncStorage.setItem("@username", res.data.username)
-                        .then(()=>navigation.navigate("Home"))
+                        .then(()=>{
+                            AsyncStorage.setItem("@pfp", res.data.pfp)
+                            .then(()=>navigation.navigate("Home"))
+                        })
                         // setStatus("success")
                         
                     }

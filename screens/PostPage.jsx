@@ -1,7 +1,7 @@
 import React from 'react'
 import Post from '../components/Post'
 import Comments from '../components/Comments';
-import {View, Button, ToastAndroid, Alert} from 'react-native'
+import {View, Button, ToastAndroid, Alert, ScrollView} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFetch from '../hooks/useFetch'
@@ -38,9 +38,9 @@ export default function PostPage({route}){
           );
         }
     }, [res, error])
-    return <View>
-        <Post post={post}/>
+    return <ScrollView contentContainerStyle={{alignItems: "center"}}>
+        <Post post={post} view={true}/>
         {admin?<Button title="Delete post" onPress={onDelete} disabled={loading}/>:<></>}
         <Comments postID={post._id}/>
-    </View>
+    </ScrollView>
 }

@@ -25,8 +25,8 @@ const Comments = ({postID}) => {
     const onDelete = (commentID) => {
         deleteData(url+commentID, {headers: {token}})
     }
-    const renderItem = ({item, index}) => {
-        return <View style={styles.comment}>
+    const renderItem = (item, index) => {
+        return <View style={styles.comment} key={item._id}>
             <Image src={item.userID.pfp} style={styles.img}/>
             {/* <Text style={styles.username}></Text> */}
             <Text style={{width: username===item.userID.username?"50%":"100%"}}>{item.userID.username}: {item.content}</Text>
@@ -68,14 +68,15 @@ const Comments = ({postID}) => {
   return (
     <View style={styles.container}>
         <Text>Comments</Text>
-        <FlatList 
+        {/* <FlatList 
         data={data} 
         keyExtractor={item=>item._id} 
         contentContainerStyle={styles.list} 
         refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={()=>setRefreshing(true)} />
         }
-        renderItem={renderItem}/>
+        renderItem={renderItem}/> */}
+        {data.map(renderItem)}
         <View style={styles.inputGroup}>
             <TextInput placeholder='Write a Comment' value={content} onChangeText={setContent}/>
             <Button title="Post" onPress={onPostComment}/>
@@ -87,13 +88,13 @@ const Comments = ({postID}) => {
 const styles = StyleSheet.create({
     container: {
         gap: 20,
-        height: 100,
-        overflowY: "scroll",
-        height: Dimensions.get("screen").height * 0.2
+        padding: 50
+        // overflowY: "scroll",
+        // height: Dimensions.get("screen").height * 0.2
     },
     inputGroup: {
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     comment: {
         flexDirection: "row",

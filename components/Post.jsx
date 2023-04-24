@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const url = `https://peridot-curly-fedora.glitch.me/posts/likes/`
 
-export default function Post({post}){
+export default function Post({post, view=false}){
     const navigation = useNavigation()
     const {_id, image, userID:user, caption, likes} = post
     const [liked, setLiked] = React.useState(false)
@@ -29,19 +29,20 @@ export default function Post({post}){
     return <View style={styles.container}>
         <View style={styles.top}>
             <Image src={user.pfp} style={styles.pfp}/>
-            <Text>{user.username}</Text>
+            <Text style={styles.username}>{user.username}</Text>
         </View>
-        <View>
+        <View style={styles.imgCont}>
             <Image src={image} style={styles.postImg}/>
         </View>
         <View style={styles.buttonGroup}>
             <Button title={liked?"Liked":"Like"} onPress={onLike}/>
-            <Button title="Comments" onPress={onComment}/>
+            {!view && <Button title="Comments" onPress={onComment}/>}
         </View>
         <View>
             <Text>{likesArray.length} likes</Text>
         </View>
-        <View>
+        <View style={styles.top}>
+            <Text style={styles.username}>{user.username}</Text>
             <Text>{caption}</Text>
         </View>
     </View>
@@ -49,14 +50,15 @@ export default function Post({post}){
 
 const styles = StyleSheet.create({
     postImg : {
-        resizeMode: 'contain',
-        width: 200,
-        height: 300
+        width: 250,
+        height: 355
+    },
+    imgCont: {
+        alignItems: "center"
     },
     pfp: {
-        resizeMode: 'contain',
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
         borderRadius: 100
     },
     top: {
@@ -66,11 +68,16 @@ const styles = StyleSheet.create({
     },
     container: {
         margin: 20,
-        width: "90%",
-        gap: 10
+        width: 250,
+        gap: 20,
+        // borderColor: "blue", borderWidth: 3
     },
     buttonGroup: {
         flexDirection: "row",
         justifyContent: "space-between"
+    },
+    username: {
+        fontWeight: 600,
+        fontSize: 18
     }
 })
