@@ -1,11 +1,13 @@
 import React from 'react'
-import {View, Text, FlatList, Image, TextInput, Button, StyleSheet, Alert, Dimensions, RefreshControl, Pressable} from 'react-native' 
+import {View, Text, FlatList, Image, TextInput, Button, StyleSheet, Alert, Dimensions, RefreshControl, Pressable, TouchableOpacity} from 'react-native' 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import useFetch from '../hooks/useFetch'
 import Edit from './Edit'
+import { useNavigation } from '@react-navigation/native'
 
 const url = `https://peridot-curly-fedora.glitch.me/comments/`
 const Comments = ({postID}) => {
+    const navigation = useNavigation()
     const {data, res, loading, error, getData, postData, patchData, deleteData} = useFetch()
     const [content, setContent] = React.useState("")
     const [refreshing, setRefreshing] = React.useState(false);
@@ -29,7 +31,10 @@ const Comments = ({postID}) => {
         return <View style={styles.comment} key={item._id}>
             <Image src={item.userID.pfp} style={styles.img}/>
             {/* <Text style={styles.username}></Text> */}
-            <Text style={{width: username===item.userID.username?"50%":"100%"}}>{item.userID.username}: {item.content}</Text>
+            <TouchableOpacity style={[styles.top, {width: username===item.userID.username?"50%":"100%"}]} onPress={()=>navigation.push("OtherProfile", {user:item.userID})}>
+               <Text>{item.userID.username}: {item.content}</Text> 
+            </TouchableOpacity>
+            
             <View style={{display:username===item.userID.username?"flex":"none", flexDirection: "row", gap: 10, width: "50%"}}>
                 <Edit content={item.content} onEdit={onEdit} commentID={item._id}/>
                 <Pressable onPress={()=>onDelete(item._id)}>
@@ -68,14 +73,6 @@ const Comments = ({postID}) => {
   return (
     <View style={styles.container}>
         <Text>Comments</Text>
-        {/* <FlatList 
-        data={data} 
-        keyExtractor={item=>item._id} 
-        contentContainerStyle={styles.list} 
-        refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={()=>setRefreshing(true)} />
-        }
-        renderItem={renderItem}/> */}
         {data.map(renderItem)}
         <View style={styles.inputGroup}>
             <TextInput placeholder='Write a Comment' value={content} onChangeText={setContent}/>

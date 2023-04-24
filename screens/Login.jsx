@@ -23,7 +23,6 @@ export default function Login({navigation}){
         }
         React.useEffect(()=>{
                 if (res){
-                    console.log(res.data)
                     AsyncStorage.setItem("@token", res.data.token)
                     .then(()=>{
                         AsyncStorage.setItem("@username", res.data.username)
@@ -39,13 +38,17 @@ export default function Login({navigation}){
                 }
                 if (error){
     //                 setStatus("error")
+                    console.log(error)
+                    if (error.response.data){
+                        Alert.alert(error.response.data.message)
+                    }
                 }
         }, [res, error])
         return <View style={styles.container}>
             <View style={styles.form}>
                 <TextInput value={email} KeyboardType="email-address" inputMode="email" onChangeText={setEmail} placeholder="Email Address"/>
                 <TextInput value={password} keyboardType="visible-password" onChangeText={setPassword} placeholder="Password"/>
-                <Button title="Login" onPress={onSubmit}/>
+                <Button title="Login" disabled={loading} onPress={onSubmit}/>
             </View>
         </View>
 }

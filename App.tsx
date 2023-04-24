@@ -18,6 +18,7 @@ import Register from './screens/Register'
 import Profile from './screens/Profile'
 import PostPage from './screens/PostPage'
 import EditProfile from './screens/EditProfile';
+import OtherProfile from './screens/OtherProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,7 @@ function App(): JSX.Element {
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="Post" component={PostPage} />
             <Stack.Screen name="Edit Profile" component={EditProfile} />
+            <Stack.Screen name="OtherProfile" component={OtherProfile} options={{title: "Profile"}}/>
           </Stack.Navigator>
     </NavigationContainer>
     </>

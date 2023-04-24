@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, Image, StyleSheet, Button} from 'react-native'
+import {View, Text, Image, StyleSheet, Button, TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
@@ -26,11 +26,22 @@ export default function Post({post, view=false}){
     const onComment = () => {
         navigation.push("Post", {post})
     }
+    React.useEffect(()=>{
+        AsyncStorage.getItem("@username")
+        .then(username=>{
+            for (let user of likes){
+                if (user.username===username){
+                    setLiked(true)
+                    break;
+                }
+            }
+        })
+    }, [])
     return <View style={styles.container}>
-        <View style={styles.top}>
+        <TouchableOpacity style={styles.top} onPress={()=>navigation.push("OtherProfile", {user:post.userID})}>
             <Image src={user.pfp} style={styles.pfp}/>
             <Text style={styles.username}>{user.username}</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.imgCont}>
             <Image src={image} style={styles.postImg}/>
         </View>
@@ -42,7 +53,9 @@ export default function Post({post, view=false}){
             <Text>{likesArray.length} likes</Text>
         </View>
         <View style={styles.top}>
-            <Text style={styles.username}>{user.username}</Text>
+            <TouchableOpacity style={styles.top} onPress={()=>navigation.push("OtherProfile", {user:post.userID})}>
+                <Text style={styles.username}>{user.username}</Text>
+            </TouchableOpacity>
             <Text>{caption}</Text>
         </View>
     </View>
@@ -62,6 +75,7 @@ const styles = StyleSheet.create({
         borderRadius: 100
     },
     top: {
+        display: "flex",
         flexDirection: "row",
         gap: 8,
         alignItems: "center"

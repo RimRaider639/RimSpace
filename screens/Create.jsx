@@ -16,7 +16,6 @@ export default function Create({navigation}){
     const onSubmit = async () => {
 
         await getPublicURL()
-        console.log("submit",res)
     }
     const getPublicURL = async () =>{
             const form = new FormData();
@@ -42,7 +41,7 @@ export default function Create({navigation}){
             <View style={styles.container}>
                 <Image
                     source={{ uri: resourcePath?resourcePath.uri:DEFAULT_IMG }}
-                    style={{ width: 200, height: 200 }}
+                    style={{ width: 200, height: 300 }}
                 />
                 <UploadImage setResourcePath={setResourcePath}/>
                 <TextInput style={styles.caption} value={caption} onChangeText={setCaption} placeholder="Caption"/>
