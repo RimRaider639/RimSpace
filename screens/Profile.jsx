@@ -54,11 +54,11 @@ export default function Profile({navigation}){
     return <View style={styles.container}>
         <View style={styles.top}>
             <View style={styles.avatar}>
-                <Image src={pfp} style={styles.pfp}/>
+                {pfp && <Image src={pfp} style={styles.pfp}/>}
                 <Text style={styles.username}>{username}</Text>
             </View>
-            <View>
-                <Button title="Edit Profile"/>
+            <View style={styles.buttonGroup}>
+                <Button title="Edit Profile" onPress={()=>navigation.navigate("Edit Profile")}/>
                 <Button title="Logout" onPress={onLogout}/>
             </View>
             {loading?<Text>Loading...</Text>:
@@ -115,5 +115,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 20,
         alignItems: "center"
+    },
+    buttonGroup: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
 })

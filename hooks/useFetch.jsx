@@ -7,10 +7,15 @@ export default function useFetch(){
     const [error, setError] = React.useState(false)
     const [res, setRes] = React.useState(false)
 
-    const getData = (url, config) => {
-        setLoading(true)
+    const reset = () => {
         setError(false)
-        setData([])
+        setRes(false)
+        setLoading(false)
+    }
+
+    const getData = (url, config) => {
+        reset()
+        setLoading(true)
         return axios.get(url, config)
         .then(res=>setData(res.data))
         .catch(err=>setError(true))
@@ -18,9 +23,8 @@ export default function useFetch(){
     }
 
     const postData = (url, data, config) => {
+        reset()
         setLoading(true)
-        setError(false)
-        setRes(false)
         return axios.post(url, data, config)
         .then(res=>setRes(res))
         .catch(err=>setError(err))
@@ -28,9 +32,8 @@ export default function useFetch(){
     }
 
     const deleteData = (url, config) => {
+        reset()
         setLoading(true)
-        setError(false)
-        setRes(false)
         return axios.delete(url, config)
         .then(res=>setRes(res))
         .catch(err=>setError(err))
@@ -38,14 +41,14 @@ export default function useFetch(){
     }
 
     const patchData = (url, changes, config) => {
+        reset()
         setLoading(true)
-        setError(false)
-        setRes(false)
         return axios.patch(url, changes, config)
         .then(res=>setRes(res))
         .catch(err=>setError(err))
         .finally(_=>setLoading(false))
     }
 
-    return {data, loading, error, res, getData, postData, deleteData, patchData}
+
+    return {data, loading, error, res, getData, postData, deleteData, patchData, reset}
     }

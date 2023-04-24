@@ -17,6 +17,7 @@ import Create from './screens/Create'
 import Register from './screens/Register'
 import Profile from './screens/Profile'
 import PostPage from './screens/PostPage'
+import EditProfile from './screens/EditProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,7 @@ function App(): JSX.Element {
             <Stack.Screen name="Create" component={Create} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="Post" component={PostPage} />
+            <Stack.Screen name="Edit Profile" component={EditProfile} />
           </Stack.Navigator>
     </NavigationContainer>
     </>
