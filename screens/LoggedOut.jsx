@@ -1,16 +1,20 @@
 import React from 'react'
 import {View, Text, Image, Button, StyleSheet, Dimensions} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SocketContext } from '../contexts/socketContext';
 
 export default function LoggedOut({navigation}){
+    const {io} = React.useContext(SocketContext)
     React.useEffect(()=>{
         AsyncStorage.getItem("@token")
         .then(token=>{
             console.log(token)
             if (token) navigation.navigate("Root")
         })
+        if (io) io.disconnect()
 
     }, [])
+
     return <View>
         <View style={styles.img}>
             <Image source={require("../assets/images/Rectangle.png")}/>

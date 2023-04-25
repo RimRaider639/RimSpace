@@ -8,23 +8,25 @@ import PostPage from '../screens/PostPage';
 import EditProfile from '../screens/EditProfile';
 import OtherProfile from '../screens/OtherProfile';
 import Root from '../screens/Root';
+import Chat from '../screens/Chat';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   return (
     <NavigationContainer>
         <Stack.Navigator initialRouteName="LoggedOut">
-        <Stack.Screen
-            name="LoggedOut"
-            component={LoggedOut}
-            options={{title: 'Welcome!'}}
-            />
-        <Stack.Screen name="Root" component={Root} options={{headerShown:false}}/>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Post" component={PostPage} />
-        <Stack.Screen name="Edit Profile" component={EditProfile} />
-        <Stack.Screen name="OtherProfile" component={OtherProfile} options={{title: "Profile"}}/>
+          <Stack.Screen
+              name="LoggedOut"
+              component={LoggedOut}
+              options={{title: 'Welcome!'}}
+              />
+          <Stack.Screen name="Root" component={Root} options={{headerShown:false}}/>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Post" component={PostPage} />
+          <Stack.Screen name="Edit Profile" component={EditProfile} />
+          <Stack.Screen name="Chat" component={Chat} />
+          <Stack.Screen name="OtherProfile" component={OtherProfile} options={{title: "Profile"}}/>
         </Stack.Navigator>
 </NavigationContainer>
   )

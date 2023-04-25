@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, ScrollScreen, Text, Dimensions} from 'react-native'
+import {View, Dimensions} from 'react-native'
 import Posts from '../components/Posts'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
