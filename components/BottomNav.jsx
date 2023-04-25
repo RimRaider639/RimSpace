@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function BottomNav(){
     const navigation = useNavigation()
     return <View style={styles.container}>
-        <Pressable onPress={()=>navigation.navigate("Home")}>
+        {/* <Pressable onPress={()=>navigation.navigate("Home")}>
             <Image source={require("../assets/icons/home.jpg")}/>
         </Pressable>
         <Image source={require("../assets/icons/search.jpg")}/>
@@ -15,7 +15,7 @@ export default function BottomNav(){
         <Image source={require("../assets/icons/Comment.jpg")}/>
         <Pressable onPress={()=>navigation.navigate("Profile")}>
             <Image source={require("../assets/icons/bell.jpg")}/>
-        </Pressable>
+        </Pressable> */}
     </View>
 }
 
@@ -30,3 +30,4 @@ const styles = StyleSheet.create({
         height: Dimensions.get("screen").height*0.1
     }
 })
+

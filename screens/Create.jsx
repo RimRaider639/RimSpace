@@ -4,11 +4,13 @@ import useFetch from '../hooks/useFetch'
 import BottomNav from '../components/BottomNav'
 import UploadImage from '../components/UploadImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 const DEFAULT_IMG = `https://images.unsplash.com/photo-1618734479294-0d21359e67b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Z29yZG9uJTIwcmFtc2V5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60`
 const url = `https://peridot-curly-fedora.glitch.me/posts`
 const GET_URL = `https://api.imgbb.com/1/upload?key=1ceb2351b7fa35f99502de57b2d8e7d0`
 export default function Create({navigation}){
+    const tabHeight = useBottomTabBarHeight()
     const [caption, setCaption] = React.useState("")
     const {res, loading, error, postData} = useFetch()
     const [resourcePath, setResourcePath] = React.useState(null)
@@ -38,7 +40,7 @@ export default function Create({navigation}){
     }, [res, error])
 
     return <View>
-            <View style={styles.container}>
+            <View style={[styles.container, {height:Dimensions.get("screen").height-tabHeight*3}]}>
                 <Image
                     source={{ uri: resourcePath?resourcePath.uri:DEFAULT_IMG }}
                     style={{ width: 200, height: 300 }}
@@ -47,7 +49,6 @@ export default function Create({navigation}){
                 <TextInput style={styles.caption} value={caption} onChangeText={setCaption} placeholder="Caption"/>
                 <Button disabled={loading} title="Create" onPress={onSubmit}/>
             </View>
-            <BottomNav/>
     </View>
 }
 
@@ -55,7 +56,6 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         alignItems: "center",
-        height: Dimensions.get("screen").height*0.75,
         gap: 20,
         paddingTop: 30,
         paddingBottom: 30

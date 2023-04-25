@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
         width: "30%",
         height: 150,
         alignItems: "center",
-        marginBottom: 20
+        marginBottom: 10,
+        flex: 1/3
     },
     grid: {
-        justifyContent: "space-between",
         gap:10
     },
 })

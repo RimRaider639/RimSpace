@@ -2,13 +2,14 @@ import React from 'react'
 import {View, Text, Image, Button, FlatList, StyleSheet, RefreshControl, Pressable, Dimensions, Alert} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFetch from '../hooks/useFetch'
-import BottomNav from '../components/BottomNav'
 import ProfilePosts from '../components/ProfilePosts';
 import ProfileAvatar from '../components/ProfileAvatar';
+// import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 const url = `https://peridot-curly-fedora.glitch.me/posts/profile`
 
 export default function Profile({navigation}){
+    // const tabHeight = useBottomTabBarHeight()
     const {data, loading, error, getData} = useFetch()
     const [refreshing, setRefreshing] = React.useState(false);
     const [token, setToken] = React.useState(null)
@@ -48,7 +49,7 @@ export default function Profile({navigation}){
         
     }, [refreshing, token])
 
-    return <View style={styles.container}>
+    return <View style={[styles.container]}>
         <View style={styles.top}>
             <ProfileAvatar username={username} pfp={pfp}/>
             <View style={styles.buttonGroup}>
@@ -60,13 +61,12 @@ export default function Profile({navigation}){
             <ProfilePosts data={data} admin={1} setRefreshing={setRefreshing} refreshing={refreshing}/>
             }
         </View>
-        <BottomNav/>
     </View>
 }
 
 const styles = StyleSheet.create({
     top: {
-        height: Dimensions.get("screen").height*0.73,
+        height:Dimensions.get("screen").height*0.73,
         width: "100%",
         gap: 30
     },

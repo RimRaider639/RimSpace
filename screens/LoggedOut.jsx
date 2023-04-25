@@ -7,7 +7,7 @@ export default function LoggedOut({navigation}){
         AsyncStorage.getItem("@token")
         .then(token=>{
             console.log(token)
-            if (token) navigation.navigate("Home")
+            if (token) navigation.navigate("Root")
         })
 
     }, [])
@@ -24,7 +24,7 @@ export default function LoggedOut({navigation}){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     img: {
         flex: 3

@@ -1,10 +1,10 @@
 import React from 'react'
-import {View, Button, Text, TextInput, StyleSheet, Dimensions} from 'react-native'
+import {View, Button, Text, TextInput, StyleSheet, Dimensions, Alert} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFetch from '../hooks/useFetch'
 
 export default function Login({navigation}){
-        const [email, setEmail] = React.useState("gordon@gmail.com")
+        const [email, setEmail] = React.useState("gordon123@gmail.com")
         const [password, setPassword] = React.useState("gordon")
         const [showPassword, setShowPassword] = React.useState(false);
         const {res, loading, error, postData} = useFetch()
@@ -28,7 +28,7 @@ export default function Login({navigation}){
                         AsyncStorage.setItem("@username", res.data.username)
                         .then(()=>{
                             AsyncStorage.setItem("@pfp", res.data.pfp)
-                            .then(()=>navigation.navigate("Home"))
+                            .then(()=>navigation.navigate("Root"))
                         })
                         // setStatus("success")
                         

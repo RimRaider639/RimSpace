@@ -63,7 +63,7 @@ export default function Register({navigation}){
     }, [res, error])
     return <View style={styles.container}>
         <View style={styles.form}>
-            <View style={[styles.row, styles.small]}>
+            <View style={styles.upload}>
                 <Image style={styles.image} src={resourcePath? resourcePath.uri : DEFAULT_IMG}/>
                 <UploadImage setResourcePath={setResourcePath}/>
             </View>
@@ -88,15 +88,13 @@ const styles = StyleSheet.create({
         gap: 10
     },
     image: {
-        height: 50,
-        width: 50,
-        margin: 10,
+        height: 100,
+        width: 100,
+        margin: 20,
         borderRadius: 100
     },
-    row: {
-        flexDirection: "row"
+    upload: {
+        alignItems: "center",
+        gap: 30
     },
-    small: {
-        fontSize: 1
-    }
 })

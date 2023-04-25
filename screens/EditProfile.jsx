@@ -60,7 +60,6 @@ const EditProfile = () => {
     }, [resourcePath])
     React.useEffect(()=>{
         if (res){
-            console.log("res", res.data)
             if (res.data.message) {
                 ToastAndroid.showWithGravity(
                     res.data.message,
@@ -78,14 +77,13 @@ const EditProfile = () => {
             Alert.alert("Error occurred", JSON.stringify(error.response), [{text: 'OK', onPress: reset}])
         }
     }, [res, error])
-    console.log(user)
   return (
     <View style={{padding: 20, gap: 20}}>
-        <View style={{flexDirection:"row", gap: 20, alignItems: "center"}}>
-            <Image src={user.pfp?user.pfp:DEFAULT_IMG} style={{width: 30, height: 30, borderRadius: 100}}/>
+        <View style={{gap: 40, alignItems: "center"}}>
+            <Image src={user.pfp?user.pfp:DEFAULT_IMG} style={{width: 100, height: 100, borderRadius: 100}}/>
             <UploadImage setResourcePath={setResourcePath}/>
         </View>
-        <View>
+        <View style={{gap: 20, padding: 20}}>
             <TextInput value={user.username} onChangeText={e=>setUser({...user, username:e})}/>
             <TextInput value={user.email} onChangeText={e=>setUser({...user, email:e})}/>
             <View style={{flexDirection:"row", gap: 20}}>

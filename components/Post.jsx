@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet, Button, TouchableOpacity} from 'react-nat
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+import LikesList from './LikesList';
 
 const url = `https://peridot-curly-fedora.glitch.me/posts/likes/`
 
@@ -11,6 +12,8 @@ export default function Post({post, view=false}){
     const {_id, image, userID:user, caption, likes} = post
     const [liked, setLiked] = React.useState(false)
     const [likesArray, setLikesArray] = React.useState(likes)
+    const [likesVisible, setLikesVisible] = React.useState(false)
+
     const onLike = () => {
         AsyncStorage.getItem("@token")
         .then(token=>{
@@ -49,9 +52,10 @@ export default function Post({post, view=false}){
             <Button title={liked?"Liked":"Like"} onPress={onLike}/>
             {!view && <Button title="Comments" onPress={onComment}/>}
         </View>
-        <View>
+        <TouchableOpacity onPress={()=>setLikesVisible(true)}>
             <Text>{likesArray.length} likes</Text>
-        </View>
+            <LikesList likes={likesArray} modalVisible={likesVisible} setModalVisible={setLikesVisible}/>
+        </TouchableOpacity>
         <View style={styles.top}>
             <TouchableOpacity style={styles.top} onPress={()=>navigation.push("OtherProfile", {user:post.userID})}>
                 <Text style={styles.username}>{user.username}</Text>

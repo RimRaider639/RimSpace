@@ -83,9 +83,9 @@ export default UploadImage
 
 const styles = StyleSheet.create({
     upload: {
-        width: "80%",
+        width: "100%",
+        justifyContent: "space-between",
         alignItems: "center",
-        gap: 10,
         flexDirection: "row",
     },
     btn: {
