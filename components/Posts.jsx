@@ -1,5 +1,5 @@
 import React from 'react'
-import {FlatList, Image, View, Text, RefreshControl} from 'react-native'
+import {FlatList, Image, View, Text, RefreshControl, ActivityIndicator} from 'react-native'
 import useFetch from '../hooks/useFetch'
 import Post from '../components/Post'
 
@@ -12,7 +12,7 @@ export default function Posts({navigation}){
         .then(()=>setRefreshing(false))
     }, [refreshing])
     return <>
-        {loading?<Text>Loading...</Text>:
+        {loading?<ActivityIndicator size={"large"}/>:
         error?<Text>Some error occurred...</Text>:
         <FlatList
         data={data}

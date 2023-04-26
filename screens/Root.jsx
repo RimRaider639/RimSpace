@@ -6,10 +6,16 @@ const Root = ({route}) => {
   const {io, initialise} = React.useContext(SocketContext)
 
   React.useEffect(()=>{
-      if (!io) AsyncStorage.getItem("@username")
+    try {
+      if (!io || (io && !io.io)) AsyncStorage.getItem("@username")
       .then(username=>{
+        console.log("username", username)
           initialise(username)
       })
+    } catch (error) {
+      console.log(error)
+    }
+      
       return ()=>{
         if (io) io.disconnect()
       }

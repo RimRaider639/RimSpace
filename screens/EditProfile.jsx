@@ -3,6 +3,7 @@ import React from 'react'
 import useFetch from '../hooks/useFetch'
 import UploadImage from '../components/UploadImage'
 import {View, TextInput, Button, Image, Alert, ToastAndroid} from 'react-native'
+import { SocketContext } from '../contexts/socketContext'
 const url = `https://peridot-curly-fedora.glitch.me/user/`
 const DEFAULT_IMG = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0ZL7it9GAAc4a1Fb40d6fxu-paaRZ-zG2yQ&usqp=CAU"
 const GET_URL = `https://api.imgbb.com/1/upload?key=1ceb2351b7fa35f99502de57b2d8e7d0`
@@ -14,6 +15,7 @@ const initUser = {
 }
 const EditProfile = () => {
     const {data, res, loading, error, getData, patchData, postData, reset} = useFetch()
+    const {io, initialise} = React.useContext(SocketContext)
     const [token, setToken] = React.useState(null)
     const [resourcePath, setResourcePath] = React.useState(null)
     const [user, setUser] = React.useState(initUser)
@@ -30,6 +32,8 @@ const EditProfile = () => {
     const updateStorage = async ({username, pfp}) => {
         await AsyncStorage.setItem("@username", username)
         await AsyncStorage.setItem("@pfp", pfp)
+        if (io.io) io.disconnect()
+        initialise(username)
     }
     const onReset = () => {
         setUser(data)

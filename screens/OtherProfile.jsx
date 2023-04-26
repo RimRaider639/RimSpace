@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { SocketContext } from '../contexts/socketContext'
 const url = `https://peridot-curly-fedora.glitch.me/posts/`
-const chatURL = `https://grizzly-lapis-pump.glitch.me/chats/join`
+const chatURL = `https://grizzly-lapis-pump.glitch.me/join`
 
 const OtherProfile = ({route}) => {
     const navigation = useNavigation()
@@ -32,14 +32,17 @@ const OtherProfile = ({route}) => {
     }, [refreshing])
     React.useEffect(()=>{
         if (chatData.chat){
+            console.log("response", chatData)
             getChats()
-            navigation.navigate("Chat", {chatID:chatData.chat._id})
+            .then(()=>navigation.navigate("Chat", {chatID:chatData.chat._id}))
+            
             
         }
         if (msgError){
             console.log(JSON.stringify(msgError))
         }
     }, [chatData, msgError])
+
   return (
     <View style={styles.container}>
         <ProfileAvatar username={user.username} pfp={user.pfp}/>

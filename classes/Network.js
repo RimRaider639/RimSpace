@@ -1,4 +1,5 @@
 import socketIOClient from 'socket.io-client';
+import {ToastAndroid} from 'react-native';
 import axios from 'axios';
 const socketURL = `wss://grizzly-lapis-pump.glitch.me`;
 const serverURL = `https://grizzly-lapis-pump.glitch.me/chats/all`;
@@ -25,15 +26,13 @@ export default class Network {
   }
 
   async getChats(setChats) {
-    console.log(this.user);
     try {
       this.chats = await axios
         .get(serverURL, {
           params: {user: this.user},
         })
         .then(res => res.data);
-      setChats(this.chats);
-      console.log('chats:', this.chats);
+      setChats([...this.chats]);
     } catch (error) {
       console.log('error1', error);
     }
@@ -45,28 +44,55 @@ export default class Network {
         console.log('joined');
         await this.getChats(updateChats);
       } else {
-        this.onlineUsers.push(user);
-        console.log(this.onlineUsers);
+        if (!this.onlineUsers.includes(user)) this.onlineUsers.push(user);
+        console.log('online users:', this.onlineUsers);
+      }
+    });
+
+    this.io.on('offline', async user => {
+      if (user !== this.user) {
+        for (let i = 0; i < this.onlineUsers; i++) {
+          if (this.onlineUsers[i] === user) {
+            this.onlineUsers.splice(i, 1);
+            break;
+          }
+        }
       }
     });
 
     this.io.on('new message', ({chatID, message, from}) => {
-      console.log(from, 'says', message);
-      this.chats = this.chats.map(chat =>
-        chat._id === chatID
-          ? {...chat, message: chat.message.push({user: from, message})}
-          : chat,
+      console.log(from, 'says', message, 'chatID:', chatID);
+      // if (from !== this.user) {
+      ToastAndroid.showWithGravity(
+        `${from} says ${message}`,
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP,
       );
-      updateChats({...this.chats});
+      // }
+      this.setChats(updateChats, {chatID, message, from});
     });
+  }
+
+  setChats(updateChats, {chatID, message, from}) {
+    for (let i = 0; i < this.chats.length; i++) {
+      if (this.chats[i]._id === chatID) {
+        this.chats[i].messages.push({from, message});
+        console.log('each chat', this.chats[i].messages);
+        break;
+      }
+    }
+    updateChats([...this.chats]);
   }
 
   disconnect() {
     console.log('disconnecting...');
     try {
-      this.io.emit('close', this.user);
-      this.io.disconnect();
+      if (this.io) {
+        this.io.emit('close', this.user);
+        this.io.disconnect();
+      }
       this.io = null;
+      this.onlineUsers = [];
     } catch (error) {
       console.log('error2', error);
     }

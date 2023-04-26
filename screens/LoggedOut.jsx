@@ -19,6 +19,9 @@ export default function LoggedOut({navigation}){
         <View style={styles.img}>
             <Image source={require("../assets/images/Rectangle.png")}/>
         </View>
+        <View style={styles.brandContainer}>
+            <Text style={styles.brand}>RimSpace</Text>
+        </View>
         <View style={styles.buttonGroup}>
             <Button style={styles.btn} onPress={()=>navigation.navigate('Login')} title="Login"/>
             <Button style={styles.btn} onPress={()=>navigation.navigate('Register')} title="Register"/>
@@ -28,10 +31,12 @@ export default function LoggedOut({navigation}){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width
     },
     img: {
-        flex: 3
+        width: "100%",
+        height: "100%"
     },
     buttonGroup: {
         width: "100%",
@@ -40,12 +45,26 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: "white",
         padding: 20,
-        top: 600
+        position: "absolute",
+        bottom: 0
     },
     btn: {
         border: "1px solid white",
         color: "white",
         padding: "5px 15px",
         backgroundColor: "black"
+    },
+    brand: {
+        fontWeight: 900,
+        color: "grey",
+        fontSize: 30
+    },
+    brandContainer: {
+        position: "absolute",
+        top: Dimensions.get("window").height*0.4,
+        textAlign: "center",
+        width: Dimensions.get("window").width,
+        justifyContent: "center",
+        flexDirection: "row"
     }
 })

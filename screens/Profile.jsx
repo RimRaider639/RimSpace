@@ -1,15 +1,17 @@
 import React from 'react'
-import {View, Text, Image, Button, FlatList, StyleSheet, RefreshControl, Pressable, Dimensions, Alert} from 'react-native'
+import {View, Text, Image, Button, FlatList, StyleSheet, RefreshControl, Pressable, Dimensions, Alert, ActivityIndicator} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFetch from '../hooks/useFetch'
 import ProfilePosts from '../components/ProfilePosts';
 import ProfileAvatar from '../components/ProfileAvatar';
+import { SocketContext } from '../contexts/socketContext';
 // import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 const url = `https://peridot-curly-fedora.glitch.me/posts/profile`
 
 export default function Profile({navigation}){
     // const tabHeight = useBottomTabBarHeight()
+    const {io} = React.useContext(SocketContext)
     const {data, loading, error, getData} = useFetch()
     const [refreshing, setRefreshing] = React.useState(false);
     const [token, setToken] = React.useState(null)
@@ -17,7 +19,8 @@ export default function Profile({navigation}){
     const [pfp, setPfp] = React.useState("")
     const onLogout = async () => {
         try{
-            await AsyncStorage.removeItem("@token")
+            await AsyncStorage.multiRemove(["@token", "@username", "@pfp"])
+            io.disconnect()
             navigation.navigate("LoggedOut")
         }catch(err){
             Alert.alert("Error Occurred")
@@ -56,7 +59,7 @@ export default function Profile({navigation}){
                 <Button title="Edit Profile" onPress={()=>navigation.navigate("Edit Profile")}/>
                 <Button title="Logout" onPress={onLogout}/>
             </View>
-            {loading?<Text>Loading...</Text>:
+            {loading?<ActivityIndicator size={"large"}/>:
 //             error?<Text>Some error occurred...</Text>:
             <ProfilePosts data={data} admin={1} setRefreshing={setRefreshing} refreshing={refreshing}/>
             }

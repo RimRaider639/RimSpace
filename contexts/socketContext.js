@@ -7,16 +7,17 @@ export default function SocketContextProvider({children}) {
   const io = React.useRef(null);
   const [chats, setChats] = React.useState([]);
   const initialise = username => {
+    console.log('initialising connection');
     io.current = new Network(username);
     io.current.connect();
     io.current.listenToRoom(setChats);
   };
   const getChats = () => {
-    io.current.getChats(setChats);
+    return io.current.getChats(setChats);
   };
   return (
     <SocketContext.Provider
-      value={{io: io.current, initialise, chats, getChats}}>
+      value={{io: io.current, initialise, chats, getChats, setChats}}>
       {children}
     </SocketContext.Provider>
   );
