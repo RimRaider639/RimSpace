@@ -23,6 +23,6 @@ Social media app using react native. User can create an account, login, post pic
 ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![SocketIO](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
 
-[Code](https://grizzly-lapis-pump.glitch.me)
+[Code](https://glitch.com/edit/#!/grizzly-lapis-pump)
 
-[Live](https://glitch.com/edit/#!/grizzly-lapis-pump)
+[Live](https://grizzly-lapis-pump.glitch.me)
