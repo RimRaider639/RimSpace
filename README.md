@@ -3,6 +3,14 @@
  
 Social media app using react native. User can create an account, login, post pictures, comment and like.
 
+## Frontend
+![React Native](	https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+
+
+### Features: 
+- Post pictures, comment and like on posts,
+- Chat with friends
+
 ## Backend
 
 ### Users and Posts Management
