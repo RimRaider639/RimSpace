@@ -18,6 +18,10 @@ Social media app using react native. User can create an account, login, post pic
 [Live](https://peridot-curly-fedora.glitch.me)
 
 ### Chat Management
+![nodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![MongoDb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![SocketIO](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
 
 [Code](https://grizzly-lapis-pump.glitch.me)
 
