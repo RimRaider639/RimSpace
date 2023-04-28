@@ -5,6 +5,7 @@ Social media app using react native. User can create an account, login, post pic
 
 ## Frontend
 ![React Native](	https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![SocketIO](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white)
 
 
 ### Features: 
