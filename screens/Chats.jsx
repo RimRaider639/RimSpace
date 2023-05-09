@@ -8,6 +8,7 @@ const Chats = () => {
     const navigation = useNavigation()
     const {chats, initialise, io} = React.useContext(SocketContext)
     const [username, setUsername] = React.useState("")
+    const [onlineUsers, setOnlineUsers] = React.useState(null)
     const renderItem = ({item, index}) =>{
         let other;
         for (let user of item.users){
@@ -18,18 +19,22 @@ const Chats = () => {
         }
         return <View  style={styles.chat}>
             <TouchableOpacity style={styles.flex} onPress={()=>navigation.navigate("Chat", {chatID:item._id})}>
-                <Text>{io.onlineUsers.includes(other)?"Online":"Offline"}</Text>
+                <Text>{onlineUsers && onlineUsers.includes(other)?"Online":"Offline"}</Text>
                 <Text style={styles.username}>{other}</Text>
-                <Text>{item.messages.length?item.messages[item.messages.length-1].message:""}</Text>
+                <Text numberOfLines={1} style={{flex:1}}>{item.messages.length?item.messages[item.messages.length-1].message:""}</Text>
             </TouchableOpacity>
         </View>
     }
     React.useEffect(()=>{
-        if (!io) initialise()
+        if (!io || !io.io) initialise()
+        else setOnlineUsers(io.onlineUsers)
         console.log("chats", username)
         AsyncStorage.getItem("@username")
         .then(username=>setUsername(username))
-    }, [])
+    }, [io || (io && io.io)])
+    // React.useEffect(()=>{
+    //     setOnlineUsers(io.onlineUsers)
+    // }, [io.onlineUsers])
   return (
     <View style={styles.container}>
         <FlatList data={chats} keyExtractor={(chat, index)=>index} renderItem={renderItem} contentContainerStyle={styles.chatsContainer}/>
@@ -50,7 +55,8 @@ const styles = StyleSheet.create({
     },
     chatsContainer: {
         width: "100%",
-        gap: 15
+        gap: 15,
+        flexDirection: "column-reverse"
     },
     container: {
         padding: 20

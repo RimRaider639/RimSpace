@@ -44,31 +44,33 @@ export default class Network {
         console.log('joined');
         await this.getChats(updateChats);
       } else {
-        if (!this.onlineUsers.includes(user)) this.onlineUsers.push(user);
+        if (!this.onlineUsers.includes(user))
+          this.onlineUsers = [...this.onlineUsers, user];
         console.log('online users:', this.onlineUsers);
       }
     });
 
     this.io.on('offline', async user => {
       if (user !== this.user) {
+        let online = [];
         for (let i = 0; i < this.onlineUsers; i++) {
-          if (this.onlineUsers[i] === user) {
-            this.onlineUsers.splice(i, 1);
-            break;
+          if (this.onlineUsers[i] !== user) {
+            online.push(this.onlineUsers[i]);
           }
         }
+        this.onlineUsers = online;
       }
     });
 
     this.io.on('new message', ({chatID, message, from}) => {
       console.log(from, 'says', message, 'chatID:', chatID);
-      // if (from !== this.user) {
-      ToastAndroid.showWithGravity(
-        `${from} says ${message}`,
-        ToastAndroid.SHORT,
-        ToastAndroid.TOP,
-      );
-      // }
+      if (from !== this.user) {
+        ToastAndroid.showWithGravity(
+          `${from} says ${message}`,
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP,
+        );
+      }
       this.setChats(updateChats, {chatID, message, from});
     });
   }
@@ -76,12 +78,18 @@ export default class Network {
   setChats(updateChats, {chatID, message, from}) {
     for (let i = 0; i < this.chats.length; i++) {
       if (this.chats[i]._id === chatID) {
-        this.chats[i].messages.push({from, message});
+        const temp = this.chats[i];
+        temp.messages.push({from, message});
+        this.chats = [
+          ...this.chats.slice(0, i),
+          ...this.chats.slice(i + 1),
+          temp,
+        ];
         console.log('each chat', this.chats[i].messages);
         break;
       }
     }
-    updateChats([...this.chats]);
+    updateChats(this.chats);
   }
 
   disconnect() {
